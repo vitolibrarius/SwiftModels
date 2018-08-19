@@ -6,18 +6,18 @@
 
 import Foundation
 
-protocol Mappable: Codable {
-    init?(jsonString: String)
+public protocol Mappable: Codable {
+	init?(jsonString: String)
 }
 
 extension Mappable {
-    init?(jsonString: String) {
+    public init?(jsonString: String) {
         guard let data = jsonString.data(using: .utf8) else {
             return nil
         }
         self = try! JSONDecoder().decode(Self.self, from: data)
     }
-    init?(jsonData: Data) {
+    public init?(jsonData: Data) {
         self = try! JSONDecoder().decode(Self.self, from: jsonData)
     }
 }
