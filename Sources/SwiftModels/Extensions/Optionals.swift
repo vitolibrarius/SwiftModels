@@ -5,7 +5,7 @@
 import Foundation
 
 extension Optional where Wrapped == String {
-    var isNilOrEmpty: Bool {
+    public var isNilOrEmpty: Bool {
         switch self {
         case let string?:
             return string.isEmpty
@@ -16,7 +16,7 @@ extension Optional where Wrapped == String {
 }
 
 extension Optional where Wrapped: Collection {
-    var isNilOrEmpty: Bool {
+    public var isNilOrEmpty: Bool {
         switch self {
         case let collection?:
             return collection.isEmpty

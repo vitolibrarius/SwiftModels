@@ -17,55 +17,37 @@ public struct Model : Mappable {
     let relationships: [String: Relationship]?
     let fetches: [String: Fetch]?
 
-    public subscript(key: String) -> Any? {
-        /// Retrieves a variable's value, starting at the current context and going upwards
-        get {
-            switch key {
-            case "attributeNames":
-                return Array(self.attributes.keys).sorted()
-            case "relationshipNames":
-                return self.relationshipNames()
-            default:
-                return nil
-            }
-        }
-
-        /// Set a variable in the current context, deleting the variable if it's nil
-        set(value) {
-        }
+    public func attributeNames() -> [String] {
+        return Array(self.attributes.keys).sorted()
     }
 
-//    func attributeNames() -> [String] {
-//        return Array(self.attributes.keys).sorted()
-//    }
-
-    func attributeNamed(name: String) -> Attribute? {
+    public func attributeNamed(name: String) -> Attribute? {
         return self.attributes[name]
     }
 
-    func relationshipNames() -> [String] {
+    public func relationshipNames() -> [String] {
         if ( self.relationships == nil ) {
             return []
         }
         return Array(self.relationships!.keys).sorted()
     }
 
-    func relationshipNamed(name: String) -> Relationship? {
+    public func relationshipNamed(name: String) -> Relationship? {
         return (self.relationships == nil ? nil : self.relationships?[name])
     }
 
-    func fetchesNames() -> [String] {
+    public func fetchesNames() -> [String] {
         if ( self.fetches == nil ) {
             return []
         }
         return Array(self.fetches!.keys).sorted()
     }
 
-    func fetchNamed(name: String) -> Fetch? {
+    public func fetchNamed(name: String) -> Fetch? {
         return (self.fetches == nil ? nil : self.fetches?[name])
     }
 
-    func dependencies() -> Set<String> {
+    public func dependencies() -> Set<String> {
         if ( self.relationships == nil ) {
             return Set<String>()
         }
@@ -80,7 +62,7 @@ public struct Model : Mappable {
         return dependencies
     }
 
-    func validate() -> [String] {
+    public func validate() -> [String] {
         var problems : [String] = []
 
         for pk in primaryKeys {
