@@ -33,6 +33,7 @@ public struct Attribute : Mappable {
         case defaultValue
         case inputPattern
     }
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.column = try container.decode(String.self, forKey: .column)

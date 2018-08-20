@@ -7,8 +7,8 @@
 import Foundation
 
 public struct Model : Mappable {
-    let name: String
-    let package: String
+    let _name: String
+    let _package: String
     let table: String
     let primaryKeys: [String]
     let sortOrder: [SortOrder]
@@ -16,6 +16,24 @@ public struct Model : Mappable {
     let attributes: [String: Attribute]
     let relationships: [String: Relationship]?
     let fetches: [String: Fetch]?
+
+    enum CodingKeys : String, CodingKey {
+        case _name = "name"
+        case _package = "package"
+        case table
+        case primaryKeys
+        case sortOrder
+        case indexes
+        case attributes
+        case relationships
+        case fetches
+    }
+}
+
+extension Model {
+	public var name: String {
+	    get { return _name }
+	}
 
     public func attributeNames() -> [String] {
         return Array(self.attributes.keys).sorted()
@@ -61,7 +79,11 @@ public struct Model : Mappable {
         dependencies.remove(self.name)
         return dependencies
     }
+}
 
+// MARK: validation
+
+extension Model {
     public func validate() -> [String] {
         var problems : [String] = []
 
